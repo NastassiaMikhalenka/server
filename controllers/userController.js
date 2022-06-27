@@ -1,14 +1,9 @@
-import {validationResult} from "express-validator";
 import bcrypt from "bcrypt";
 import UserModal from "../models/userModel.js";
 import jwt from "jsonwebtoken";
 
 export const register = async (req, res) => {
     try {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json(errors.array());
-        }
 
         const password = req.body.password;
         const salt = await bcrypt.genSalt(10);
@@ -36,26 +31,25 @@ export const register = async (req, res) => {
             token
         });
     } catch (err) {
-        console.log(err);
         res.status(500).json({
-            message: 'Не удалось зарегестрироваться',
+            message: 'Failed to register',
         });
     }
-}
+};
 
-export const login  = async (req, res) => {
+export const login = async (req, res) => {
     try {
         const user = await UserModal.findOne({email: req.body.email});
-        if(!user){
+        if (!user) {
             return res.status(404).json({
-                message: 'Пользователь не найден',
+                message: 'User is not found',
             });
         }
 
-        const isValidPass = await  bcrypt.compare(req.body.password, user._doc.passwordHash);
-        if(!isValidPass){
+        const isValidPass = await bcrypt.compare(req.body.password, user._doc.passwordHash);
+        if (!isValidPass) {
             return res.status(400).json({
-                message: 'Неверный логин или пароль',
+                message: 'Wrong login or password',
             });
         }
 
@@ -73,10 +67,9 @@ export const login  = async (req, res) => {
         });
 
 
-    } catch (err){
-        console.log(err);
+    } catch (err) {
         res.status(500).json({
-            message: 'Не удалось авторизоваться',
+            message: 'Failed to login',
         });
     }
 }
@@ -85,19 +78,18 @@ export const getMe = async (req, res) => {
     try {
         const user = await UserModal.findById(req.userId);
 
-        if(!user) {
+        if (!user) {
             return res.status(404).json({
-                message: 'Пользователь не найден',
+                message: 'User is not found',
             });
         }
 
         const {passwordHash, ...userData} = user._doc;
 
         res.json(userData);
-    } catch (err){
-        console.log(err);
+    } catch (err) {
         res.status(500).json({
-            message: 'Нет доступа',
+            message: 'No access',
         });
     }
-}
+};

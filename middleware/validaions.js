@@ -1,21 +1,21 @@
 import {body} from "express-validator";
 
 export const registerValidation = [
-    body('email', 'Неверный формат почты').isEmail(),
-    body('password', 'Пароль должен быть минимум 5 символов').isLength({min: 5, max: 20}),
-    body('fullName', 'Укажите имя').isLength({min: 3}),
-    body('avatarUrl', 'Неверная ссылка на аватарку').optional().isURL(),
+    body('email', 'Invalid mail format').isEmail(),
+    body('password', 'Password must be at least 5 characters and not more than 20').isLength({min: 5, max: 20}),
+    body('fullName', 'Name must be at least 3 characters and not more than 20').isLength({min: 3, max: 20}),
+    body('avatarUrl', 'Invalid avatar link').optional().isURL(),
 ];
 
 export const loginValidation = [
-    body('email', 'Неверный формат почты').isEmail(),
-    body('password', 'Пароль должен быть минимум 5 символов').isLength({min: 5, max: 20}),
+    body('email', 'Invalid mail format').isEmail(),
+    body('password', 'Password must be at least 5 characters and not more than 20').isLength({min: 5, max: 20}),
 ];
 
-export const postCreateValidation = [
-    body('title', 'Введите заголовок статьи').isLength({ min: 3 }).isString(),
-    body('text', 'Введите текст статьи').isLength({ min: 10 }).isString(),
-    body('tags', 'Неверный формат тэгов').optional().isString(),
-    body('imageUrl', 'Неверная ссылка на изображение').optional().isString(),
+export const postValidation = [
+    body('title', 'Enter article title').isLength({min: 3}).isString(),
+    body('text', 'Enter article text').isLength({min: 10}).isString(),
+    body('tags', 'Wrong tag format').optional().isString(),
+    body('imageUrl', 'Invalid image link').optional().isString(),
 ];
 

@@ -8,7 +8,10 @@ mongoose.connect(process.env.MONGODB_URL)
     .catch((err) => console.log('DB error', err));
 
 const app = express();
+
 app.use(express.json()); // позволяет читать json в наших запросах
+
+app.use('/uploads', express.static('uploads'));
 
 app.use('/', router);
 

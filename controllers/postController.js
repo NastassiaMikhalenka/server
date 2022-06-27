@@ -5,9 +5,8 @@ export const getAllPosts = async (req, res) => {
         const posts = await PostModel.find().populate('user').exec(); // связь с пользователем
         res.json(posts);
     } catch (err) {
-        console.log(err);
         res.status(500).json({
-            message: 'Не удалось получить статьи',
+            message: 'Failed to retrieve articles',
         });
     }
 };
@@ -22,15 +21,14 @@ export const getOnePost = async (req, res) => {
             {returnDocument: 'after',}, // после обновления вернуть актуальный документ
             (err, doc) => {
                 if (err) {
-                    console.log(err);
                     return res.status(500).json({
-                        message: 'Не удалось вернуть статью',
+                        message: 'Unable to return article',
                     });
                 }
 
                 if (!doc) {
                     return res.status(404).json({
-                        message: 'Статья не найдена',
+                        message: 'Article not found',
                     });
                 }
 
@@ -38,9 +36,8 @@ export const getOnePost = async (req, res) => {
             },
         ).populate('user'); // связь с user
     } catch (err) {
-        console.log(err);
         res.status(500).json({
-            message: 'Не удалось получить статьи',
+            message: 'Failed to retrieve articles',
         });
     }
 };
@@ -58,9 +55,8 @@ export const createPost = async (req, res) => {
         const post = await doc.save();
         res.json(post);
     } catch (err) {
-        console.log(err);
         res.status(500).json({
-            message: 'Не удалось создать статью',
+            message: 'Failed to create article',
         });
     }
 };
@@ -75,15 +71,14 @@ export const deletePost = async (req, res) => {
             },
             (err, doc) => {
                 if (err) {
-                    console.log(err);
                     return res.status(500).json({
-                        message: 'Не удалось удалить статью',
+                        message: 'Failed to delete article',
                     });
                 }
 
                 if (!doc) {
                     return res.status(404).json({
-                        message: 'Статья не найдена',
+                        message: 'Article not found',
                     });
                 }
 
@@ -93,9 +88,8 @@ export const deletePost = async (req, res) => {
             },
         );
     } catch (err) {
-        console.log(err);
         res.status(500).json({
-            message: 'Не удалось получить статьи',
+            message: 'Failed to retrieve articles',
         });
     }
 };
@@ -121,9 +115,8 @@ export const updatePost = async (req, res) => {
             success: true,
         });
     } catch (err) {
-        console.log(err);
         res.status(500).json({
-            message: 'Не удалось обновить статью',
+            message: 'Failed to update article',
         });
     }
 };
