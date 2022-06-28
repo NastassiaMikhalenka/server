@@ -6,6 +6,7 @@ import handleValidationErrors from "../middleware/handleValidationErrors.js";
 
 const router = new Router();
 router.get('/', PostController.getAllPosts);
+router.get('/tags', PostController.getLastTags);
 router.get('/:id', PostController.getOnePost);
 router.post('/', checkAuth, postValidation, handleValidationErrors, PostController.createPost);
 router.delete('/:id', checkAuth, PostController.deletePost);
